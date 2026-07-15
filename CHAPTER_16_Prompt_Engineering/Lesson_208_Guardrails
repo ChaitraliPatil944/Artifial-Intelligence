@@ -1,0 +1,375 @@
+# Chapter 16 – Prompt Engineering
+
+# Lesson 208 – Guardrails
+
+> **Guardrails are the policies, rules, validation mechanisms, and security controls that ensure an AI system behaves safely, reliably, and within defined boundaries. While prompts guide an LLM on what to do, guardrails ensure it does not perform actions that violate safety, business rules, or system constraints. Guardrails are a fundamental component of production-grade AI systems.**
+
+---
+
+# Learning Objectives
+
+- Understand what Guardrails are.
+- Learn why Guardrails are essential.
+- Study different types of Guardrails.
+- Understand runtime validation.
+- Learn production AI safety architecture.
+- Prepare for interviews.
+
+---
+
+# Table of Contents
+
+1. What are Guardrails?
+2. Why Guardrails are Needed
+3. Types of Guardrails
+4. Input Guardrails
+5. Output Guardrails
+6. Tool Guardrails
+7. Human-in-the-Loop
+8. Guardrails vs Jailbreaks
+9. Production AI Pipeline
+10. Best Practices
+11. Python Example
+12. Mini Project
+13. Interview Questions
+14. Summary
+15. What's Next?
+
+---
+
+# 1. What are Guardrails?
+
+Guardrails are safety mechanisms placed around an AI system.
+
+```text
+User
+ │
+Input Guardrails
+ │
+LLM
+ │
+Output Guardrails
+ │
+Application
+```
+
+Their purpose is to ensure the AI behaves according to predefined rules.
+
+Think of them as the **seatbelts and brakes** of an AI application.
+
+---
+
+# 2. Why Guardrails are Needed
+
+Without guardrails an AI may:
+
+- Generate unsafe outputs
+- Leak confidential information
+- Produce incorrect formats
+- Misuse external tools
+- Break business policies
+
+Example:
+
+```text
+Without Guardrails
+
+User
+ │
+LLM
+ │
+Unsafe Output
+```
+
+With guardrails:
+
+```text
+User
+ │
+Validation
+ │
+LLM
+ │
+Validation
+ │
+Safe Output
+```
+
+---
+
+# 3. Types of Guardrails
+
+There are several categories.
+
+```text
+Guardrails
+│
+├── Input Guardrails
+├── Output Guardrails
+├── Tool Guardrails
+├── Policy Guardrails
+├── Security Guardrails
+└── Human Review
+```
+
+Each layer protects a different part of the system.
+
+---
+
+# 4. Input Guardrails
+
+Input guardrails examine user requests **before** they reach the LLM.
+
+Checks include:
+
+- Invalid input
+- Malicious content
+- Empty prompts
+- Prompt injection attempts
+- Unsupported requests
+
+Workflow:
+
+```text
+User Prompt
+      │
+Input Validation
+      │
+Accept or Reject
+```
+
+---
+
+# 5. Output Guardrails
+
+After the LLM generates a response:
+
+```text
+LLM Output
+      │
+Validation
+      │
+Safe Response
+```
+
+Typical checks:
+
+- JSON validity
+- Policy compliance
+- Required fields
+- Offensive content filtering
+- Sensitive information detection
+
+---
+
+# 6. Tool Guardrails
+
+Modern AI agents can use tools.
+
+Example:
+
+```text
+LLM
+ │
+ ├── Database
+ ├── Calculator
+ ├── Search
+ ├── Email
+ └── API
+```
+
+Guardrails determine:
+
+- Which tools may be used
+- Who can use them
+- When they may be used
+- What parameters are allowed
+
+This follows the **Principle of Least Privilege**.
+
+---
+
+# 7. Human-in-the-Loop
+
+Some actions should require human approval.
+
+```text
+LLM Suggestion
+      │
+Human Review
+      │
+Approve
+  or
+Reject
+```
+
+Common examples:
+
+- Medical recommendations
+- Financial decisions
+- Legal documents
+- High-value transactions
+
+---
+
+# 8. Guardrails vs Jailbreaks
+
+| Guardrails | Jailbreaks |
+|------------|------------|
+| Defensive mechanisms | Attempts to bypass rules |
+| Protect AI systems | Challenge AI systems |
+| Improve reliability | Exploit weaknesses |
+| Used in production | Used in security testing |
+
+---
+
+# 9. Production AI Pipeline
+
+A production AI application often looks like:
+
+```text
+User
+ │
+Authentication
+ │
+Input Guardrails
+ │
+Prompt Builder
+ │
+LLM
+ │
+Output Guardrails
+ │
+Business Logic
+ │
+Response
+```
+
+Every stage reduces overall system risk.
+
+---
+
+# 10. Best Practices
+
+- Validate every input.
+- Validate every output.
+- Restrict tool access.
+- Log important events.
+- Use multiple guardrail layers.
+- Continuously update policies.
+- Monitor system behavior.
+
+---
+
+# 11. Python Example
+
+```python
+def validate_prompt(prompt):
+    if len(prompt.strip()) == 0:
+        return False
+
+    return True
+
+
+user_prompt = "Explain supervised learning."
+
+if validate_prompt(user_prompt):
+    print("Send to LLM")
+else:
+    print("Reject request")
+```
+
+Real production systems perform significantly more sophisticated validation.
+
+---
+
+# 12. Mini Project
+
+Build a secure AI assistant.
+
+Tasks:
+
+1. Validate user input.
+2. Generate a response.
+3. Validate the response.
+4. Restrict tool usage.
+5. Log all important events.
+
+Draw the complete pipeline.
+
+---
+
+# 13. Interview Questions
+
+### What are Guardrails?
+
+Safety mechanisms that ensure AI systems operate within predefined rules and policies.
+
+---
+
+### Why are Guardrails important?
+
+They improve safety, reliability, compliance, and security.
+
+---
+
+### Name four types of Guardrails.
+
+- Input Guardrails
+- Output Guardrails
+- Tool Guardrails
+- Human Approval
+
+---
+
+### Are prompts and guardrails the same thing?
+
+No.
+
+Prompts guide model behavior.
+
+Guardrails enforce system-level safety and validation.
+
+---
+
+### What is the Principle of Least Privilege?
+
+Only granting an AI system the minimum permissions required to complete its task.
+
+---
+
+# 14. Summary
+
+You learned:
+
+- What Guardrails are
+- Why they are necessary
+- Input validation
+- Output validation
+- Tool restrictions
+- Human approval workflows
+- Production AI architecture
+
+---
+
+# 15. What's Next?
+
+## Lesson 209 – Prompt Evaluation
+
+In the next lesson you'll learn:
+
+- What Prompt Evaluation is
+- Why evaluation matters
+- Automatic vs Human evaluation
+- Accuracy metrics
+- Hallucination detection
+- Prompt A/B testing
+- Regression testing
+- Benchmark datasets
+- LLM-as-a-Judge
+- Production evaluation pipelines
+- Python implementation
+- Interview questions
+- Mini Project
+
+By the end of Lesson 209, you'll know how companies systematically measure prompt quality instead of relying on intuition.
